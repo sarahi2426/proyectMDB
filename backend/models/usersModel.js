@@ -13,6 +13,10 @@ const userSchema = mongoose.Schema({
     password: {
         type:String,
         required:[true , "Por favor teclea tu password"]
+    },
+    role:{
+        type:String,
+        default:'user'
     }
 },{
     timestamps: true

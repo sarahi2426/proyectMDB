@@ -23,17 +23,24 @@ const registrarUser = asyncHandler(async (req , res) =>{
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash( password , salt)
 
+        let role = 'user'
+        if(email.includes("@admin") === true ){
+            role = 'admin'
+        }
+
         const user = await User.create({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            role
         })
 
         if(user){
             res.status(201).json({
                 _id: user.id,
                 name : user.name,
-                email:user.email
+                email:user.email,
+                role:user.role
             })
         }else{
             res.status(400)
@@ -54,6 +61,7 @@ const loginUser = asyncHandler(async (req , res) =>{
             _id: user.id,
             name: user.name,
             email: user.email,
+            role:user.role,
             token:generarToken(user._id)
         })
 

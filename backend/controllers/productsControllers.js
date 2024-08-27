@@ -17,7 +17,8 @@ const createProducts = asyncHandler(async(req,res) =>{
    const product= await Product.create({
     producto,
     color ,
-    precio 
+    precio,
+    user:req.user.id
    })
 
 
